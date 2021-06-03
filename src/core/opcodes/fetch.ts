@@ -1,23 +1,25 @@
 import fetch from 'node-fetch';
 import Context from "../models/Context";
 import { Opcode, OpcodeLine } from "../models/Opcode";
-import { setMemory } from '../services/MemoryService';
+import { getMemory, injectVariable, setMemory } from '../services/MemoryService';
 
 /** 
  * Fetches a resource from the given URL
  * 
- * Example: ["FETCH", "$a", "https://pokeapi.co/api/v2/pokemon/748/"]
+ * Example: ["FETCH", "$a", "$url"]
  * 
  * [0] - Opcode name FETCH
  * [1] - Variable to store result to
- * [2] - URL to fetch
+ * [2] - Variable that points to a string containing an URL
  */
 const fetchOpcode: Opcode = {
     gas: 100,
     execute: async (line: OpcodeLine, context: Context) => {
         const memoryTarget = line[1] as string;
-        const url = line[2] as string;
-        const response = await fetch(url);
+        const memoryLocation = line[2] as string;
+
+        const entry = getMemory(memoryLocation, context, ['string']);
+        const response = await fetch(entry.value);
 
         if (!response.ok) {
             const body = await response.text();

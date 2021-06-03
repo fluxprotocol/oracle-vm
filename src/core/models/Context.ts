@@ -3,7 +3,7 @@ import { MemoryEntry } from "./Memory";
 class Context {
     memory: Map<string, MemoryEntry> = new Map();
     gasUsed: number = 0;
-    gasLimit: number = 100000;
+    gasLimit: number = 1000;
     result?: string;
 
     clone(): Context {

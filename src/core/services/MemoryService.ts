@@ -17,18 +17,18 @@ export function getMemory(key: string, context: Context, expectedType: MemoryTyp
         throw new Error(`Expected variable at ${key}`);
     }
 
-    if (!expectedType.includes(value.type)) {
-        throw new Error(`Expected ${expectedType} but found ${value?.type} at ${key}`);
+    if (expectedType.length) {
+        if (!expectedType.includes(value.type)) {
+            throw new Error(`Expected ${expectedType} but found ${value?.type} at ${key}`);
+        }
     }
 
     return value;
 }
 
 /**
- * Injects variable into a string.
- * Mostly used for FETCH and RETURN ops
- * 
- * TODO: Create this
+ * Injects variables into the target string.
+ * When the variable could not be found in the memory, the key will be returned
  *
  * @export
  * @param {string} target
@@ -36,5 +36,8 @@ export function getMemory(key: string, context: Context, expectedType: MemoryTyp
  * @return {string}
  */
 export function injectVariable(target: string, context: Context): string {
-    return context.memory.get(target)?.value ?? '';
+    return target.replace(/\$(\w+)/gi, (key) => {
+        const entry = context.memory.get(key);
+        return entry?.value ?? key;
+    });
 }

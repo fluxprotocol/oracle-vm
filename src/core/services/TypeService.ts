@@ -2,7 +2,7 @@ import Big from "big.js";
 import { MemoryType } from "../models/Memory";
 import { isMemoryType } from './MemoryService';
 
-export function isBigNum(value: string): boolean {
+export function isNum(value: string): boolean {
     return /^\d+$/.test(value);
 }
 
@@ -11,7 +11,7 @@ export function validateType(value: string, expectedType: MemoryType) {
         throw new TypeError(`Type ${expectedType} does not exist`);
     }
 
-    if (isBigNum(value)) {
+    if (isNum(value)) {
         validateNumberRange(new Big(value), expectedType);
     }
 }

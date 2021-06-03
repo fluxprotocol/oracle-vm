@@ -1,6 +1,7 @@
 import Context from "../models/Context";
 import { MemoryType } from "../models/Memory";
 import { Opcode, OpcodeLine } from "../models/Opcode";
+import { injectVariable } from "../services/MemoryService";
 import { validateType } from "../services/TypeService";
 
 /**
@@ -19,11 +20,13 @@ const varOpcode: Opcode = {
         const memoryTarget = line[1] as string;
         const value = line[2] as string;
         const valueType = line[3] as MemoryType;
-        validateType(value, valueType);
+        const finalValue = injectVariable(value, context);
+
+        validateType(finalValue, valueType);
 
         context.memory.set(memoryTarget, {
             type: valueType,
-            value,
+            value: finalValue,
         });
     }
 }

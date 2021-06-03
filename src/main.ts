@@ -31,6 +31,17 @@ export async function executeCode(code: Code, options: ExecuteOptions = {}): Pro
                 line: index,
             });
 
+            // We should not exceed the gas limit
+            if (context.gasUsed > context.gasLimit) {
+                return {
+                    code: 1,
+                    context,
+                    debugInfo,
+                    message: `Gas limit exceeded ${context.gasUsed}/${context.gasLimit}`,
+                    result: '',
+                };
+            }
+
             if (context.result) {
                 return {
                     code: 0,
@@ -41,7 +52,7 @@ export async function executeCode(code: Code, options: ExecuteOptions = {}): Pro
                 };
             }
         }
-    
+
         return {
             code: 1,
             message: 'No RETURN opcode triggered',
