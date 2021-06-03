@@ -7,7 +7,7 @@ export async function executeOpcode(opcodeLine: OpcodeLine, context: Context) {
     const opcodeMethod = opcodes[opcodeName];
 
     if (!opcodeMethod) {
-        throw new Error(`OPCODE "${opcodeName}" not available`);
+        throw new Error(`Opcode "${opcodeName}" not available`);
     }
 
     await opcodeMethod.execute(opcodeLine, context);

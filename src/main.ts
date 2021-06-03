@@ -3,27 +3,44 @@ import { Code } from "./core/models/Code";
 import { ExecuteResult } from "./core/models/ExecuteResult";
 import { executeOpcode } from "./core/OpcodeExecutor";
 
-export async function executeCode(code: Code): Promise<ExecuteResult> {
-    const context = new Context();
+interface ExecuteOptions {
+    context?: Context;
+    debug?: boolean;
+}
 
-    while(code.length) {
-        const line = code.pop();
+export async function executeCode(code: Code, options: ExecuteOptions = {}): Promise<ExecuteResult> {
+    const context = options.context ?? new Context();
+    let currentLine = 0;
 
-        if (!line) {
-            return {
-                code: 1,
-                message: '',
-                context,
+    try {
+        for await (let [index, line] of code.entries()) {
+            currentLine = index;
+
+            await executeOpcode(line, context);
+
+            if (context.result) {
+                return {
+                    code: 0,
+                    context,
+                    result: context.result,
+                    message: '',
+                };
             }
         }
-
-        await executeOpcode(line, context);
-    }
-
-    return {
-        code: 1,
-        message: '',
-        context,
+    
+        return {
+            code: 1,
+            message: 'No RETURN opcode triggered',
+            context,
+            result: '',
+        }
+    } catch (error) {
+        return {
+            code: 1,
+            message: `${error.toString()} - @op:${currentLine}:${code[currentLine][0]}`,
+            context,
+            result: '',
+        }
     }
 }
 

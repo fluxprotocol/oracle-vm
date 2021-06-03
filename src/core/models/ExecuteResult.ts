@@ -1,15 +1,12 @@
 import Context from "./Context";
 
-export interface SuccessExecuteResult {
-    code: number;
-    result: string;
-    context: Context;
-}
+export interface DebugInfo {
 
-export interface FailedExecutedResult {
+}
+export interface ExecuteResult {
+    debug?: DebugInfo;
+    result: string;
     code: number;
     message: string;
     context: Context;
 }
-
-export type ExecuteResult = SuccessExecuteResult | FailedExecutedResult;
