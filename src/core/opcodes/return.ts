@@ -1,8 +1,7 @@
-import at from 'lodash.at';
-
 import Context from '../models/Context';
 import { Opcode, OpcodeLine } from '../models/Opcode';
 import { injectVariable } from '../services/MemoryService';
+
 /** 
  * Quits the process and returns the value
  * 

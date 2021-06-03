@@ -1,7 +1,9 @@
 import Big from "big.js";
-import Context, { MemoryType, NUMBER_TYPES } from "../models/Context";
+import Context from "../models/Context";
+import { MemoryType, NUMBER_TYPES } from "../models/Memory";
 import { Opcode, OpcodeLine } from "../models/Opcode";
 import { getMemory, setMemory } from "../services/MemoryService";
+import { validateNumberRange } from "../services/TypeService";
 
 const subOpcode: Opcode = {
     gas: 3,
@@ -14,10 +16,12 @@ const subOpcode: Opcode = {
         const numB = getMemory(memoryLocationB, context, NUMBER_TYPES as MemoryType[]);
 
         if (numA.type !== numB.type) {
-            throw new Error(`left type ${numA.type} did not match right type ${numB.type}`);
+            throw new TypeError(`left type ${numA.type} did not match right type ${numB.type}`);
         }
 
         const result = new Big(numA.value).sub(numB.value);
+        validateNumberRange(result, numA.type);
+
         setMemory(context, memoryTarget, {
             type: numA.type,
             value: result.toString(),

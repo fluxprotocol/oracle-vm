@@ -1,11 +1,12 @@
-import Context, { MemoryType, MemoryEntry } from "../models/Context";
+import Context from "../models/Context";
+import { MemoryEntry, MemoryType } from "../models/Memory";
 
 export function isMemoryType(type: MemoryType) {
     const memoryTypes: MemoryType[] = ['array', 'boolean', 'json', 'string', 'u128', 'u16', 'u256', 'u32', 'u64', 'u8'];
     return memoryTypes.includes(type);
 }
 
-export function setMemory(context: Context, key: string, value: MemoryEntry, ) {
+export function setMemory(context: Context, key: string, value: MemoryEntry) {
     context.memory.set(key, value);
 }
 

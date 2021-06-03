@@ -14,10 +14,8 @@ describe("main", () => {
             ];
 
             const result = await executeCode(code, {
-                debug: true,
+                debug: false,
             });
-
-            console.log('[] result -> ', result.context);
         });
     });
 });

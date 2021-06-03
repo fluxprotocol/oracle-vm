@@ -5,7 +5,7 @@ import { Opcode, OpcodeLine } from "../models/Opcode";
 import { getMemory, setMemory } from "../services/MemoryService";
 import { validateNumberRange } from "../services/TypeService";
 
-const mulOpcode: Opcode = {
+const modOpcode: Opcode = {
     gas: 5,
     execute: async (line: OpcodeLine, context: Context) => {
         const memoryTarget = line[1] as string;
@@ -19,7 +19,7 @@ const mulOpcode: Opcode = {
             throw new TypeError(`left type ${numA.type} did not match right type ${numB.type}`);
         }
 
-        const result = new Big(numA.value).mul(numB.value);
+        const result = new Big(numA.value).mod(numB.value);
         validateNumberRange(result, numA.type);
 
         setMemory(context, memoryTarget, {
@@ -29,4 +29,4 @@ const mulOpcode: Opcode = {
     }
 }
 
-export default mulOpcode;
+export default modOpcode;

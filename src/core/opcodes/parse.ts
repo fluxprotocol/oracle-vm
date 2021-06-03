@@ -1,6 +1,7 @@
 import at from 'lodash.at';
 
-import Context, { MemoryType } from '../models/Context';
+import Context from '../models/Context';
+import { MemoryType } from '../models/Memory';
 import { Opcode, OpcodeLine } from '../models/Opcode';
 import { getMemory, setMemory } from '../services/MemoryService';
 import { validateType } from '../services/TypeService';

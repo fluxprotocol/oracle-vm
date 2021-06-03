@@ -1,14 +1,24 @@
-import Context, { MemoryType } from "../models/Context";
+import Context from "../models/Context";
+import { MemoryType } from "../models/Memory";
 import { Opcode, OpcodeLine } from "../models/Opcode";
 import { validateType } from "../services/TypeService";
 
+/**
+ * Fetches a resource from the given URL
+ *
+ * Example: ["VAR", "$a", "1000", "u128"]
+ *
+ * [0] - Opcode name VAR
+ * [1] - Variable to store result to
+ * [2] - Value of the variable
+ * [3] - Type of the variable
+ */
 const varOpcode: Opcode = {
-    gas: 1,
+    gas: 2,
     execute: async (line: OpcodeLine, context: Context) => {
         const memoryTarget = line[1] as string;
         const value = line[2] as string;
         const valueType = line[3] as MemoryType;
-
         validateType(value, valueType);
 
         context.memory.set(memoryTarget, {

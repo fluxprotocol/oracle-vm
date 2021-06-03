@@ -1,6 +1,6 @@
 import Context from "./core/models/Context";
 import { Code } from "./core/models/Code";
-import { ExecuteResult } from "./core/models/ExecuteResult";
+import { DebugInfo, ExecuteResult } from "./core/models/ExecuteResult";
 import { executeOpcode } from "./core/OpcodeExecutor";
 
 interface ExecuteOptions {
@@ -9,8 +9,15 @@ interface ExecuteOptions {
 }
 
 export async function executeCode(code: Code, options: ExecuteOptions = {}): Promise<ExecuteResult> {
-    const context = options.context ?? new Context();
     let currentLine = 0;
+    const context = options.context ?? new Context();
+    let debugInfo: DebugInfo | undefined = undefined;
+
+    if (options.debug) {
+        debugInfo = {
+            steps: [],
+        };
+    }
 
     try {
         for await (let [index, line] of code.entries()) {
@@ -18,11 +25,18 @@ export async function executeCode(code: Code, options: ExecuteOptions = {}): Pro
 
             await executeOpcode(line, context);
 
+            debugInfo?.steps.push({
+                context: context.clone(),
+                opcode: code[index][0] as string,
+                line: index,
+            });
+
             if (context.result) {
                 return {
                     code: 0,
                     context,
                     result: context.result,
+                    debugInfo,
                     message: '',
                 };
             }
@@ -32,6 +46,7 @@ export async function executeCode(code: Code, options: ExecuteOptions = {}): Pro
             code: 1,
             message: 'No RETURN opcode triggered',
             context,
+            debugInfo,
             result: '',
         }
     } catch (error) {
@@ -39,6 +54,7 @@ export async function executeCode(code: Code, options: ExecuteOptions = {}): Pro
             code: 1,
             message: `${error.toString()} - @op:${currentLine}:${code[currentLine][0]}`,
             context,
+            debugInfo,
             result: '',
         }
     }

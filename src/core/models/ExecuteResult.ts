@@ -1,10 +1,17 @@
 import Context from "./Context";
 
-export interface DebugInfo {
-
+export interface DebugStep {
+    context: Context;
+    opcode: string;
+    line: number;
 }
+
+export interface DebugInfo {
+    steps: DebugStep[];
+}
+
 export interface ExecuteResult {
-    debug?: DebugInfo;
+    debugInfo?: DebugInfo;
     result: string;
     code: number;
     message: string;
