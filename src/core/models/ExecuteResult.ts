@@ -12,7 +12,7 @@ export interface DebugInfo {
 
 export interface ExecuteResult {
     debugInfo?: DebugInfo;
-    result: string;
+    result?: string;
     code: number;
     message: string;
     context: Context;

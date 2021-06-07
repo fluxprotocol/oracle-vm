@@ -1,6 +1,6 @@
-import Big from "big.js";
+import Big, { RoundingMode } from "big.js";
 import Context from "../models/Context";
-import { MemoryType, NUMBER_TYPES } from "../models/Memory";
+import { MemoryType, NUMBER_TYPES, UNSIGNED_NUMBERS } from "../models/Memory";
 import { Opcode, OpcodeLine } from "../models/Opcode";
 import { getMemory, setMemory } from "../services/MemoryService";
 import { validateNumberRange } from "../services/TypeService";
@@ -15,7 +15,11 @@ const modOpcode: Opcode = {
 
         const numA = getMemory(memoryLocationA, context, NUMBER_TYPES as MemoryType[]);
         const numB = getMemory(memoryLocationB, context, NUMBER_TYPES as MemoryType[]);
-        const result = new Big(numA.value).mod(numB.value);
+        let result = new Big(numA.value).mod(numB.value);
+
+        if (UNSIGNED_NUMBERS.includes(storeType)) {
+            result = result.round(undefined, RoundingMode.RoundDown);
+        }
         
         validateNumberRange(result, storeType);
 

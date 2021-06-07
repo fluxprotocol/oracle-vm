@@ -11,7 +11,7 @@ import { getMemory, injectVariable } from '../services/MemoryService';
  * [1] - Variable to return
  */
 const returnOpcode: Opcode = {
-    gas: 2,
+    gas: 0,
     execute: async (line: OpcodeLine, context: Context) => {
         const memoryLocation = line[1] as string;
         context.result = getMemory(memoryLocation, context, []).value;

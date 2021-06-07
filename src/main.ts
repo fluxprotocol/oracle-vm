@@ -37,8 +37,7 @@ export async function executeCode(code: Code, options: ExecuteOptions = {}): Pro
                     code: 1,
                     context,
                     debugInfo,
-                    message: `Gas limit exceeded ${context.gasUsed}/${context.gasLimit}`,
-                    result: '',
+                    message: `Gas limit exceeded ${context.gasUsed}/${context.gasLimit} - @op:${currentLine}:${code[currentLine][0]}`,
                 };
             }
 
@@ -58,7 +57,6 @@ export async function executeCode(code: Code, options: ExecuteOptions = {}): Pro
             message: 'No RETURN opcode triggered',
             context,
             debugInfo,
-            result: '',
         }
     } catch (error) {
         return {
@@ -66,7 +64,6 @@ export async function executeCode(code: Code, options: ExecuteOptions = {}): Pro
             message: `${error.toString()} - @op:${currentLine}:${code[currentLine][0]}`,
             context,
             debugInfo,
-            result: '',
         }
     }
 }

@@ -1,5 +1,7 @@
 import Big from "big.js";
-import { MemoryType } from "../models/Memory";
+import { MemoryType, UNSIGNED_NUMBERS } from "../models/Memory";
+import assert from "../utils/assertUtils";
+import { safeParseJson } from "../utils/jsonUtils";
 import { isMemoryType } from './MemoryService';
 
 export function isNum(value: string): boolean {
@@ -14,11 +16,21 @@ export function validateType(value: string, expectedType: MemoryType) {
     if (isNum(value)) {
         validateNumberRange(new Big(value), expectedType);
     }
+
+    if (expectedType === 'array') {
+        const parsedArray = safeParseJson(value);
+        assert(Array.isArray(parsedArray), 'Failed to parse array');
+    }
+
+    if (expectedType === 'json') {
+        const parsedJson = safeParseJson(value);
+        assert(parsedJson !== null, 'Failed to parse JSON');
+    }
 }
 
 /**
  * Validates a number type and checks if it's in range for the chosen type
- * This is required in JavaScript (and others) since there is no concept of number types
+ * This is required in JavaScript (and other non typed languages) since there is no concept of number types
  *
  * @export
  * @param {Big} number
@@ -29,6 +41,10 @@ export function validateNumberRange(number: Big, type: MemoryType) {
 
     if (type !== 'double' && hasComma) {
         throw new TypeError(`${type} cannot contain double values`);
+    }
+
+    if (UNSIGNED_NUMBERS.includes(type) && number.lt(0)) {
+        throw new RangeError(`${type} underflow ${number.toString()}`);
     }
 
     if (type === 'u8' && number.gt('255')) {

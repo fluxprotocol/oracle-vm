@@ -94,4 +94,44 @@ describe('var', () => {
         expect(entryA?.value).toBe('https://example.com/api/891/name');
         expect(entryA?.type).toBe('string');
     });
+
+    it('should be able to create an array', async () => {
+        const result = await executeCode([
+            ['VAR', '$a', '["1", "2"]', 'array'],
+        ]);
+
+        const entryA = result.context.memory.get('$a');
+
+        expect(entryA?.value).toBe('["1", "2"]');
+        expect(entryA?.type).toBe('array');
+    });
+
+    it('should error when the given array is not a valid array', async () => {
+        const result = await executeCode([
+            ['VAR', '$a', '["1", "2]', 'array'],
+        ]);
+
+        expect(result.code).toBe(1);
+        expect(result.message.includes('Failed to parse array')).toBe(true);
+    });
+
+    it('should be able to create a json object', async () => {
+        const result = await executeCode([
+            ['VAR', '$a', '{"hello": "world"}', 'json'],
+        ]);
+
+        const entryA = result.context.memory.get('$a');
+
+        expect(entryA?.value).toBe('{"hello": "world"}');
+        expect(entryA?.type).toBe('json');
+    });
+
+    it('should error when the given array is not a valid JSON object', async () => {
+        const result = await executeCode([
+            ['VAR', '$a', '{"hello": "world"', 'json'],
+        ]);
+
+        expect(result.code).toBe(1);
+        expect(result.message.includes('Failed to parse JSON')).toBe(true);
+    });
 });

@@ -1,4 +1,5 @@
 import { Code } from "./core/models/Code";
+import Context from "./core/models/Context";
 import { executeCode } from "./main";
 
 describe("main", () => {
@@ -22,6 +23,20 @@ describe("main", () => {
             });
 
             expect(result.result).toBe('1375929');
+        });
+
+        it('should throw a gas limit error when the gas limit has been exceeded', async () => {
+            const addOpcode = ['ADD', '$c', '$a', '$a', 'u32'];
+            const context = new Context();
+            context.gasLimit = 100;
+
+            const executeResult = await executeCode([
+                ['VAR', '$a', '1', 'u32'],
+                ...new Array(50).fill(addOpcode),
+            ], { context });
+
+            expect(executeResult.code).toBe(1);
+            expect(executeResult.message.includes('Gas limit exceeded 101/100')).toBe(true);
         });
     });
 });
