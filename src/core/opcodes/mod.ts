@@ -11,19 +11,16 @@ const modOpcode: Opcode = {
         const memoryTarget = line[1] as string;
         const memoryLocationA = line[2] as string;
         const memoryLocationB = line[3] as MemoryType;
+        const storeType = line[4] as MemoryType;
 
         const numA = getMemory(memoryLocationA, context, NUMBER_TYPES as MemoryType[]);
         const numB = getMemory(memoryLocationB, context, NUMBER_TYPES as MemoryType[]);
-
-        if (numA.type !== numB.type) {
-            throw new TypeError(`left type ${numA.type} did not match right type ${numB.type}`);
-        }
-
         const result = new Big(numA.value).mod(numB.value);
-        validateNumberRange(result, numA.type);
+        
+        validateNumberRange(result, storeType);
 
         setMemory(context, memoryTarget, {
-            type: numA.type,
+            type: storeType,
             value: result.toString(),
         });
     }

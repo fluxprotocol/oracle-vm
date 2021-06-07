@@ -2,10 +2,21 @@ import Context from "../models/Context";
 import { MemoryEntry, MemoryType } from "../models/Memory";
 
 export function isMemoryType(type: MemoryType) {
-    const memoryTypes: MemoryType[] = ['array', 'boolean', 'json', 'string', 'u128', 'u16', 'u256', 'u32', 'u64', 'u8'];
+    const memoryTypes: MemoryType[] = ['array', 'double', 'boolean', 'json', 'string', 'u128', 'u16', 'u256', 'u32', 'u64', 'u8'];
     return memoryTypes.includes(type);
 }
 
+/**
+ * Sets a variable in memory
+ *
+ * TODO: Before setting variable make sure the variable doesn't exist
+ * and if it does make sure the types match.
+ * 
+ * @export
+ * @param {Context} context
+ * @param {string} key
+ * @param {MemoryEntry} value
+ */
 export function setMemory(context: Context, key: string, value: MemoryEntry) {
     context.memory.set(key, value);
 }

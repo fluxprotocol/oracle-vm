@@ -25,6 +25,12 @@ export function validateType(value: string, expectedType: MemoryType) {
  * @param {MemoryType} type
  */
 export function validateNumberRange(number: Big, type: MemoryType) {
+    const hasComma = number.toString().includes('.');
+
+    if (type !== 'double' && hasComma) {
+        throw new TypeError(`${type} cannot contain double values`);
+    }
+
     if (type === 'u8' && number.gt('255')) {
         throw new RangeError(`u8 overflow ${number.toString()}`);
     } else if (type === 'u16' && number.gt('65535')) {

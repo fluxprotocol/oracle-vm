@@ -82,4 +82,16 @@ describe('var', () => {
         expect(entryA?.value).toBe('hello world');
         expect(entryA?.type).toBe('string');
     });
+
+    it('should be able to create a URL', async () => {
+        const result = await executeCode([
+            ['VAR', '$a', '891', 'string'],
+            ['VAR', '$url', 'https://example.com/api/$a/name', 'string'],
+        ]);
+
+        const entryA = result.context.memory.get('$url');
+
+        expect(entryA?.value).toBe('https://example.com/api/891/name');
+        expect(entryA?.type).toBe('string');
+    });
 });

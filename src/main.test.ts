@@ -11,8 +11,8 @@ describe("main", () => {
                 ["FETCH", "$apiData", "$url"],
                 ["PARSE", "$baseExperience", "$apiData", "base_experience", "u128"],
 
-                ["ADD", "$result", "$baseExperience", "$extraExperience"],
-                ["MUL", "$result", "$result", "$result"],
+                ["ADD", "$result", "$baseExperience", "$extraExperience", "u32"],
+                ["MUL", "$result", "$result", "$result", "u32"],
 
                 ["RETURN", "$result"],
             ];
