@@ -2,6 +2,10 @@ import Context from "./core/models/Context";
 import { Code } from "./core/models/Code";
 import { DebugInfo, ExecuteResult } from "./core/models/ExecuteResult";
 import { executeOpcode } from "./core/OpcodeExecutor";
+import Big from "big.js";
+
+// Prevents scientific notation of numbers
+Big.PE = 1000000000;
 
 interface ExecuteOptions {
     context?: Context;

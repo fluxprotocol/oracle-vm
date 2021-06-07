@@ -1,8 +1,8 @@
 import Context from "../models/Context";
-import { MemoryEntry, MemoryType } from "../models/Memory";
+import { MemoryEntry, MemoryType, NUMBER_TYPES } from "../models/Memory";
 
 export function isMemoryType(type: MemoryType) {
-    const memoryTypes: MemoryType[] = ['array', 'double', 'boolean', 'json', 'string', 'u128', 'u16', 'u256', 'u32', 'u64', 'u8'];
+    const memoryTypes: MemoryType[] = ['array', 'boolean', 'json', 'string', ...NUMBER_TYPES];
     return memoryTypes.includes(type);
 }
 

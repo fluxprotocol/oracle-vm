@@ -35,4 +35,26 @@ describe('add', () => {
 
         expect(executeResult.result).toBe('2');
     });
+
+    it('should return a negative number when a negative number is larger than the positive one', async () => {
+        const executeResult = await executeCode([
+            ['VAR', '$a', '1', 'i32'],
+            ['VAR', '$b', '-10', 'i32'],
+            ['ADD', '$c', '$a', '$b', 'i8'],
+            ['RETURN', '$c'],
+        ]);
+
+        expect(executeResult.result).toBe('-9');
+    });
+
+    it('should be able to add to a negative number', async () => {
+        const executeResult = await executeCode([
+            ['VAR', '$a', '-100', 'i8'],
+            ['VAR', '$b', '1', 'i8'],
+            ['ADD', '$c', '$a', '$b', 'i8'],
+            ['RETURN', '$c'],
+        ]);
+
+        expect(executeResult.result).toBe('-99');
+    });
 })

@@ -1,3 +1,4 @@
+import Big from "big.js";
 import Context from "../models/Context";
 import { injectVariable } from "./MemoryService";
 
@@ -11,7 +12,6 @@ describe('MemoryService', () => {
             });
 
             const result = injectVariable('{ "test": "$c" }', context);
-
             expect(result).toBe('{ "test": "result" }');
         });
     });

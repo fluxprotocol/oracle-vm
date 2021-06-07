@@ -43,10 +43,51 @@ export function validateNumberRange(number: Big, type: MemoryType) {
         throw new TypeError(`${type} cannot contain double values`);
     }
 
+    // Check for unsigned underflows
     if (UNSIGNED_NUMBERS.includes(type) && number.lt(0)) {
         throw new RangeError(`${type} underflow ${number.toString()}`);
     }
 
+    // Check ranges for signed numbers
+    if (type === 'i8') {
+        if (number.gt('127')) {
+            throw new RangeError(`${type} overflow ${number.toString()}`);
+        } else if (number.lt('-128')) {
+            throw new RangeError(`${type} underflow ${number.toString()}`);
+        }
+    } else if (type === 'i16') {
+        if (number.gt('32767')) {
+            throw new RangeError(`${type} overflow ${number.toString()}`);
+        } else if (number.lt('-32768')) {
+            throw new RangeError(`${type} underflow ${number.toString()}`);
+        }
+    } else if (type === 'i32') {
+        if (number.gt('2147483647')) {
+            throw new RangeError(`${type} overflow ${number.toString()}`);
+        } else if (number.lt('-2147483648')) {
+            throw new RangeError(`${type} underflow ${number.toString()}`);
+        }
+    } else if (type === 'i64') {
+        if (number.gt('9223372036854775807')) {
+            throw new RangeError(`${type} overflow ${number.toString()}`);
+        } else if (number.lt('-9223372036854775808')) {
+            throw new RangeError(`${type} underflow ${number.toString()}`);
+        }
+    } else if (type === 'i128') {
+        if (number.gt('170141183460469231731687303715884105727')) {
+            throw new RangeError(`${type} overflow ${number.toString()}`);
+        } else if (number.lt('-170141183460469231731687303715884105728')) {
+            throw new RangeError(`${type} underflow ${number.toString()}`);
+        }
+    } else if (type === 'i256') {
+        if (number.gt('57896044618658097711785492504343953926634992332820282019728792003956564819967')) {
+            throw new RangeError(`${type} overflow ${number.toString()}`);
+        } else if (number.lt('-57896044618658097711785492504343953926634992332820282019728792003956564819968')) {
+            throw new RangeError(`${type} underflow ${number.toString()}`);
+        }
+    }
+
+    // Check ranges for unsigned numbers
     if (type === 'u8' && number.gt('255')) {
         throw new RangeError(`u8 overflow ${number.toString()}`);
     } else if (type === 'u16' && number.gt('65535')) {
