@@ -8,6 +8,7 @@ import subOpcode from "./sub";
 import mulOpcode from "./mul";
 import divOpcode from "./div";
 import modOpcode from "./mod";
+import envOpcode from "./env";
 
 export interface OpcodeList {
     [key: string]: Opcode;
@@ -23,6 +24,7 @@ const opcodes: OpcodeList = {
     'MUL': mulOpcode,
     'DIV': divOpcode,
     'MOD': modOpcode,
+    'ENV': envOpcode,
 };
 
 export default opcodes;
