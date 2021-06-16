@@ -3,6 +3,7 @@ import { MemoryEntry } from "./Memory";
 class Context {
     memory: Map<string, MemoryEntry> = new Map();
     gasUsed: number = 0;
+    programCounter: number = 0;
     gasLimit: number = 1000;
     result?: string;
     args: string[];
@@ -18,8 +19,17 @@ class Context {
         context.gasUsed = this.gasUsed;
         context.gasLimit = this.gasLimit;
         context.result = this.result;
+        context.programCounter = this.programCounter;
 
         return context;
+    }
+
+    useGas(gas: number) {
+        this.gasUsed += gas;
+
+        if (this.gasUsed > this.gasLimit) {
+            throw new Error(`Gas limit exceeded ${this.gasUsed}/${this.gasLimit}`);
+        }
     }
 
     getEnvVariable(key: string): MemoryEntry {

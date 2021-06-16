@@ -79,5 +79,9 @@ const code = [
      * 
      * The return can be constructed
      */
-    ["RETURN", "{ \"weights\": [$c, $a] }"]
+    ["RETURN", "{ \"weights\": [$c, $a] }"],
+
+    ['JUMPDEST'],
+
+    ['JUMP', '2']
 ]

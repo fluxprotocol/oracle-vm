@@ -29,7 +29,7 @@ describe('env', () => {
             context,
         });
 
-        expect(executeResult.result).toBe('7');
+        expect(executeResult.result).toBe('12');
     });
 
     it('should error when the environment variable does not exist', async () => {

@@ -10,6 +10,7 @@ export async function executeOpcode(opcodeLine: OpcodeLine, context: Context) {
         throw new Error(`Opcode "${opcodeName}" not available`);
     }
 
+    // Make sure we are able to fire up the opcode
+    context.useGas(opcodeMethod.gas);
     await opcodeMethod.execute(opcodeLine, context);
-    context.gasUsed += opcodeMethod.gas;
 }
