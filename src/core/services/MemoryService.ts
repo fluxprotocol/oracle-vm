@@ -18,6 +18,10 @@ export function isMemoryType(type: MemoryType) {
  * @param {MemoryEntry} value
  */
 export function setMemory(context: Context, key: string, value: MemoryEntry) {
+    if (!isMemoryType(value.type)) {
+        throw new Error(`Type ${value.type} does not exist`);
+    }
+
     context.memory.set(key, value);
 }
 

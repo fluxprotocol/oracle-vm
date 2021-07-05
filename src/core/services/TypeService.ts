@@ -1,16 +1,29 @@
 import Big from "big.js";
-import { MemoryType, UNSIGNED_NUMBERS } from "../models/Memory";
+import { MemoryType, NUMBER_TYPES, UNSIGNED_NUMBERS } from "../models/Memory";
 import assert from "../utils/assertUtils";
 import { safeParseJson } from "../utils/jsonUtils";
 import { isMemoryType } from './MemoryService';
 
 export function isNum(value: string): boolean {
-    return /^\d+$/.test(value);
+    try {
+        new Big(value);
+        return true;
+    } catch (error) {
+        return false;
+    }
 }
 
 export function validateType(value: string, expectedType: MemoryType) {
+    if (typeof value === 'undefined') {
+        throw new TypeError('undefined is not supported');
+    }
+    
     if (!isMemoryType(expectedType)) {
         throw new TypeError(`Type ${expectedType} does not exist`);
+    }
+
+    if (NUMBER_TYPES.includes(expectedType) && !isNum(value)) {
+        throw new TypeError(`${value} is not a ${expectedType}`);
     }
 
     if (isNum(value)) {

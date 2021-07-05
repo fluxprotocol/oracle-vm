@@ -10,6 +10,7 @@ import divOpcode from "./div";
 import modOpcode from "./mod";
 import envOpcode from "./env";
 import findOpcode from "./find";
+import ltOpcode from "./comparisons/lt";
 
 export interface OpcodeList {
     [key: string]: Opcode;
@@ -27,6 +28,7 @@ const opcodes: OpcodeList = {
     'MOD': modOpcode,
     'ENV': envOpcode,
     'FIND': findOpcode,
+    'LT': ltOpcode,
 };
 
 export default opcodes;

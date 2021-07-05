@@ -134,4 +134,22 @@ describe('var', () => {
         expect(result.code).toBe(1);
         expect(result.message.includes('Failed to parse JSON')).toBe(true);
     });
+
+    it('should error when the given string is not a number', async () => {
+        const result = await executeCode([
+            ['VAR', '$a', '3h', 'u8'],
+        ]);
+
+        expect(result.code).toBe(1);
+        expect(result.message).toBe('TypeError: 3h is not a u8 - @op:0:VAR');
+    });
+
+    it('should work for comma values', async () => {
+        const result = await executeCode([
+            ['VAR', '$a', '3.5', 'double'],
+            ['RETURN', '$a'],
+        ]);
+
+        expect(result.code).toBe(0);
+    });
 });

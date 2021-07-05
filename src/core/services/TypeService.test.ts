@@ -1,8 +1,25 @@
 import Big from "big.js";
 import { MemoryType } from "../models/Memory";
-import { validateNumberRange, validateType } from "./TypeService";
+import { isNum, validateNumberRange, validateType } from "./TypeService";
 
 describe('TypeService', () => {
+    describe('isNum', () => {
+        it('should error when the value has a number but an invalid character', () => {
+            const result = isNum('3h');
+            expect(result).toBe(false);
+        });
+
+        it('should error when the value is a string', () => {
+            const result = isNum('hello');
+            expect(result).toBe(false);
+        });
+
+        it('should error when the value is a number', () => {
+            const result = isNum('456');
+            expect(result).toBe(true);
+        });
+    });
+
     describe('validateType', () => {
         it('should throw an error when the type is not a supported memory type', () => {
             const t = () => {
