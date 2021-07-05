@@ -5,7 +5,7 @@ import { injectVariable } from "../services/MemoryService";
 import { validateType } from "../services/TypeService";
 
 /**
- * Fetches a resource from the given URL
+ * Stores a variable in memory
  *
  * Example: ["VAR", "$a", "1000", "u128"]
  *

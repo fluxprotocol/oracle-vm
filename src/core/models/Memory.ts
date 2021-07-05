@@ -3,6 +3,7 @@ export type MemoryType = 'string' | 'double' | 'i8' | 'u8' | 'i16' | 'u16' | 'i3
 export const SIGNED_NUMBERS: MemoryType[] = ['i8', 'i16', 'i32', 'i64', 'i128', 'i256'];
 export const UNSIGNED_NUMBERS: MemoryType[] = ['u8', 'u16', 'u32', 'u64', 'u128', 'u256'];
 export const NUMBER_TYPES: MemoryType[] = ['double', ...UNSIGNED_NUMBERS, ...SIGNED_NUMBERS];
+export const NON_JSON_TYPES: MemoryType[] = [...NUMBER_TYPES, 'string', 'boolean'];
 
 export interface MemoryEntry {
     type: MemoryType;

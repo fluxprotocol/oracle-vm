@@ -21,7 +21,7 @@ const parseOpcode: Opcode = {
     gas: 50,
     execute: async (line: OpcodeLine, context: Context) => {
         const memoryTarget = line[1] as string;
-        const fromLocation = line[2] as MemoryType;
+        const fromLocation = line[2] as string;
         const path = line[3] as string;
         const valueType = line[4] as MemoryType;
 

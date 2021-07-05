@@ -16,6 +16,7 @@ export async function executeCode(code: Code, options: ExecuteOptions = {}): Pro
     const context = options.context ?? new Context();
 
     let debugInfo: DebugInfo | undefined = undefined;
+    let currentPointer = context.programCounter;
 
     if (options.debug) {
         debugInfo = {
@@ -25,7 +26,7 @@ export async function executeCode(code: Code, options: ExecuteOptions = {}): Pro
 
     try {
         while(true) {
-            const currentPointer = context.programCounter;
+            currentPointer = context.programCounter;
             const line = code[currentPointer];
 
             if (!line) {
@@ -37,9 +38,13 @@ export async function executeCode(code: Code, options: ExecuteOptions = {}): Pro
                 }
             }
 
-            context.programCounter += 1;
-
             await executeOpcode(line, context);
+            
+            // Program counter has not been updated due a opcode
+            // We can safely move on to the next opcode
+            if (context.programCounter === currentPointer) {
+                context.programCounter += 1;
+            }
 
             debugInfo?.steps.push({
                 context: context.clone(),
@@ -60,7 +65,7 @@ export async function executeCode(code: Code, options: ExecuteOptions = {}): Pro
     } catch (error) {
         return {
             code: 1,
-            message: `${error.toString()} - @op:${context.programCounter - 1}:${code[context.programCounter - 1][0]}`,
+            message: `${error.toString()} - @op:${currentPointer}:${code[currentPointer][0]}`,
             context,
             debugInfo,
         }
