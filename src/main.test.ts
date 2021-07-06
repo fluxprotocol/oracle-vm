@@ -26,17 +26,20 @@ describe("main", () => {
         });
 
         it('should throw a gas limit error when the gas limit has been exceeded', async () => {
-            const addOpcode = ['ADD', '$c', '$a', '$a', 'u32'];
             const context = new Context();
             context.gasLimit = 100;
 
             const executeResult = await executeCode([
-                ['VAR', '$a', '1', 'u32'],
-                ...new Array(50).fill(addOpcode),
+                ['VAR', '$dest', '3', 'u8'],
+                ['VAR', '$counter', '0', 'u8'],
+                ['VAR', '$one', '1', 'u8'],
+                ['JUMPDEST'],
+                ['ADD', '$counter', '$counter', '$one', 'u128'],
+                ['JUMP', '$dest'],
             ], { context });
 
             expect(executeResult.code).toBe(1);
-            expect(executeResult.message.includes('Gas limit exceeded 101/100')).toBe(true);
+            expect(executeResult.message).toBe('Error: Gas limit exceeded 102/100 - @op:5:JUMP');
         });
     });
 });

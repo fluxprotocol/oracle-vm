@@ -3,6 +3,7 @@ import { Code } from "./core/models/Code";
 import { DebugInfo, ExecuteResult } from "./core/models/ExecuteResult";
 import { executeOpcode } from "./core/OpcodeExecutor";
 import Big from "big.js";
+import assert from "./core/utils/assertUtils";
 
 // Prevents scientific notation of numbers
 Big.PE = 1000000000;
@@ -44,6 +45,8 @@ export async function executeCode(code: Code, options: ExecuteOptions = {}): Pro
             // We can safely move on to the next opcode
             if (context.programCounter === currentPointer) {
                 context.programCounter += 1;
+            } else {
+                assert(code[context.programCounter][0] === 'JUMPDEST', 'Cannot jump to a non JUMPDEST');
             }
 
             debugInfo?.steps.push({

@@ -11,6 +11,8 @@ import modOpcode from "./mod";
 import envOpcode from "./env";
 import findOpcode from "./find";
 import ltOpcode from "./comparisons/lt";
+import jumpdestOpcode from "./jumpdest";
+import jumpOpcode from "./jump";
 import gtOpcode from "./comparisons/gt";
 
 export interface OpcodeList {
@@ -31,6 +33,8 @@ const opcodes: OpcodeList = {
     'FIND': findOpcode,
     'LT': ltOpcode,
     'GT': gtOpcode,
+    'JUMPDEST': jumpdestOpcode,
+    'JUMP': jumpOpcode,
 };
 
 export default opcodes;
