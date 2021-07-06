@@ -1,4 +1,4 @@
-import Big, { RoundingMode } from "big.js";
+import Big from "big.js";
 import Context from "../models/Context";
 import { MemoryType, NUMBER_TYPES, UNSIGNED_NUMBERS } from "../models/Memory";
 import { Opcode, OpcodeLine } from "../models/Opcode";
@@ -18,7 +18,7 @@ const addOpcode: Opcode = {
         let result = new Big(numA.value).add(numB.value);
 
         if (UNSIGNED_NUMBERS.includes(storeType)) {
-            result = result.round(undefined, RoundingMode.RoundDown);
+            result = result.round(undefined, 0);
         }
 
         validateNumberRange(result, storeType);
