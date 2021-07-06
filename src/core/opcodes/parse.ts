@@ -3,7 +3,7 @@ import at from 'lodash.at';
 import Context from '../models/Context';
 import { MemoryType } from '../models/Memory';
 import { Opcode, OpcodeLine } from '../models/Opcode';
-import { getMemory, setMemory } from '../services/MemoryService';
+import { getMemory, injectVariable, setMemory } from '../services/MemoryService';
 import { validateType } from '../services/TypeService';
 
 /** 
@@ -25,8 +25,9 @@ const parseOpcode: Opcode = {
         const path = line[3] as string;
         const valueType = line[4] as MemoryType;
 
+        const finalPath = injectVariable(path, context);
         const value = getMemory(fromLocation, context, ['array', 'json']);
-        const result = at(JSON.parse(value.value), [path])[0];
+        const result = at(JSON.parse(value.value), [finalPath])[0];
 
         validateType(result, valueType);
 
