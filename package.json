@@ -1,7 +1,7 @@
 {
     "name": "@fluxprotocol/oracle-vm",
     "description": "Oracle VM for Flux Protocol",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "main": "index.js",
     "devDependencies": {
         "@babel/core": "^7.14.6",
