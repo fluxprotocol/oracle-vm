@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.3](https://github.com/fluxprotocol/oracle-vm/compare/v0.0.2...v0.0.3) (2021-07-06)
+
+
+### Bug Fixes
+
+* **build:** Fix issue where main.js could not be found ([deec7c0](https://github.com/fluxprotocol/oracle-vm/commit/deec7c076e8bd3e0a27b04ea178935957fa3cedc))
+
 ### [0.0.2](https://github.com/fluxprotocol/oracle-vm/compare/v0.0.1...v0.0.2) (2021-07-06)
 
 
