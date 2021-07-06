@@ -76,3 +76,4 @@ export async function executeCode(code: Code, options: ExecuteOptions = {}): Pro
 }
 
 export { Context };
+export type { Code, ExecuteOptions };
