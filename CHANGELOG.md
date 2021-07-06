@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.4](https://github.com/fluxprotocol/oracle-vm/compare/v0.0.3...v0.0.4) (2021-07-06)
+
+
+### Features
+
+* **PARSE:** Add dynamic variables to path ([25436e6](https://github.com/fluxprotocol/oracle-vm/commit/25436e6f92e29e42fb5e7f9c0e67431fff533a6d))
+
 ### [0.0.3](https://github.com/fluxprotocol/oracle-vm/compare/v0.0.2...v0.0.3) (2021-07-06)
 
 
