@@ -11,6 +11,7 @@ import modOpcode from "./mod";
 import envOpcode from "./env";
 import findOpcode from "./find";
 import ltOpcode from "./comparisons/lt";
+import gtOpcode from "./comparisons/gt";
 
 export interface OpcodeList {
     [key: string]: Opcode;
@@ -29,6 +30,7 @@ const opcodes: OpcodeList = {
     'ENV': envOpcode,
     'FIND': findOpcode,
     'LT': ltOpcode,
+    'GT': gtOpcode,
 };
 
 export default opcodes;
