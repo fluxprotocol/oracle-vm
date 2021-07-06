@@ -2,7 +2,8 @@
     "name": "@fluxprotocol/oracle-vm",
     "description": "Oracle VM for Flux Protocol",
     "version": "0.0.2",
-    "main": "index.js",
+    "main": "dist/main.js",
+    "types": "dist/src/main.d.ts",
     "devDependencies": {
         "@babel/core": "^7.14.6",
         "@babel/plugin-proposal-class-properties": "^7.14.5",

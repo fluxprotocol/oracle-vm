@@ -1,6 +1,6 @@
 const path = require('path');
 
-const exclude = '/node_modules';
+const exclude = ['/node_modules', path.resolve(__dirname, './test/')];
 
 module.exports = {
     mode: 'development',
@@ -11,7 +11,7 @@ module.exports = {
         aliasFields: ['browser'],
     },
     entry: {
-        vm: ['./src/main.ts'],
+        main: ['./src/main.ts'],
     },
     output: {
         path: path.resolve(__dirname, './dist/'),
