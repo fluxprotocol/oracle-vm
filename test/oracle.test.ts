@@ -33,11 +33,26 @@ describe('oracle', () => {
             ['VAR', '$number', '-100.23', 'double'],
             ['VAR', '$zero', '0', 'u128'],
             ['VAR', '$negOne', '-1', 'i8'],
-            ['LT', '$isNegative', '$number', '$zero'],
 
+            ['LT', '$isNegative', '$number', '$zero'],
+            ['GT', '$isPositive', '$number', '$zero'],
+
+            ['VAR', '$POS_JUMP', '13', 'u8'],
+            ['VAR', '$END_JUMP', '15', 'u8'],
+
+            ['JUMPI', '$POS_JUMP', '$isPositive'],
+
+            // Make negative number positive again
             ['MUL', '$number', '$number', '$negOne', 'double'],
             ['MUL', '$numberAnswer', '$number', '$multiplier', 'u256'],
+            ['JUMP', '$END_JUMP'],
+            
+            // Number was already positive, we can skip conversion
+            ['JUMPDEST'],
+            ['MUL', '$numberAnswer', '$number', '$multiplier', 'u256'],
 
+            // Continue execution
+            ['JUMPDEST'],
             ['VAR', '$answer', '{ "negative": $isNegative, "value": "$numberAnswer", "multiplier": "$multiplier" }', 'string'],
             ['RETURN', '$answer'],
         ], {

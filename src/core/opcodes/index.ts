@@ -12,6 +12,7 @@ import envOpcode from "./env";
 import findOpcode from "./find";
 import ltOpcode from "./comparisons/lt";
 import jumpdestOpcode from "./jumpdest";
+import jumpiOpcode from "./jumpi";
 import jumpOpcode from "./jump";
 import gtOpcode from "./comparisons/gt";
 
@@ -35,6 +36,7 @@ const opcodes: OpcodeList = {
     'GT': gtOpcode,
     'JUMPDEST': jumpdestOpcode,
     'JUMP': jumpOpcode,
+    'JUMPI': jumpiOpcode,
 };
 
 export default opcodes;
