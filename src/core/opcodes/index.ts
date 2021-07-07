@@ -15,6 +15,7 @@ import jumpdestOpcode from "./jumpdest";
 import jumpiOpcode from "./jumpi";
 import jumpOpcode from "./jump";
 import gtOpcode from "./comparisons/gt";
+import andOpcode from "./bitwise/and";
 
 export interface OpcodeList {
     [key: string]: Opcode;
@@ -30,6 +31,7 @@ const opcodes: OpcodeList = {
     'MUL': mulOpcode,
     'DIV': divOpcode,
     'MOD': modOpcode,
+    'AND': andOpcode,
     'ENV': envOpcode,
     'FIND': findOpcode,
     'LT': ltOpcode,

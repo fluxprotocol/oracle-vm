@@ -49,7 +49,8 @@ export function validateType(value: string, expectedType: MemoryType) {
  * @param {Big} number
  * @param {MemoryType} type
  */
-export function validateNumberRange(number: Big, type: MemoryType) {
+export function validateNumberRange(input: Big | string, type: MemoryType) {
+    const number = typeof input === 'string' ? new Big(input) : input;
     const hasComma = number.toString().includes('.');
 
     if (type !== 'double' && hasComma) {
