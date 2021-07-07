@@ -17,6 +17,7 @@ import jumpOpcode from "./jump";
 import gtOpcode from "./comparisons/gt";
 import andOpcode from "./bitwise/and";
 import orOpcode from "./bitwise/or";
+import eqOpcode from "./comparisons/eq";
 
 export interface OpcodeList {
     [key: string]: Opcode;
@@ -38,6 +39,7 @@ const opcodes: OpcodeList = {
     'FIND': findOpcode,
     'LT': ltOpcode,
     'GT': gtOpcode,
+    'EQ': eqOpcode,
     'JUMPDEST': jumpdestOpcode,
     'JUMP': jumpOpcode,
     'JUMPI': jumpiOpcode,
