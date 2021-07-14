@@ -14,7 +14,7 @@ const returnOpcode: Opcode = {
     gas: 0,
     execute: async (line: OpcodeLine, context: Context) => {
         const memoryLocation = line[1] as string;
-        context.result = getMemory(memoryLocation, context, []).value;
+        context.result = getMemory(memoryLocation, context, []).value.toString();
     }
 }
 

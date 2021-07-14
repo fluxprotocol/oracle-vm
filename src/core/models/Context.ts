@@ -17,9 +17,10 @@ class Context {
 
         context.memory = new Map(this.memory);
         context.gasUsed = this.gasUsed;
+        context.programCounter = this.programCounter;
         context.gasLimit = this.gasLimit;
         context.result = this.result;
-        context.programCounter = this.programCounter;
+        context.args = context.args;
 
         return context;
     }
