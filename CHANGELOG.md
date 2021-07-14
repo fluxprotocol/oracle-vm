@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.1.0](https://github.com/fluxprotocol/oracle-vm/compare/v0.0.5...v1.1.0) (2021-07-14)
+
+
+### Features
+
+* **opcode:** Add EQ opcode ([690c0ec](https://github.com/fluxprotocol/oracle-vm/commit/690c0ecbbe76af9aff021019a86ba2f9e354e872))
+* **opcode:** Add OR opcode ([f03a723](https://github.com/fluxprotocol/oracle-vm/commit/f03a723cdf10a9a0bf718b7df0f489868eed3423))
+
 ### [0.0.5](https://github.com/fluxprotocol/oracle-vm/compare/v0.0.4...v0.0.5) (2021-07-07)
 
 
