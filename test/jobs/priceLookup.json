@@ -1,9 +1,0 @@
-[
-    ["FETCH", "$a", "https://coinmarketcap.com/api/near"],
-    ["FETCH", "$b", "https://coingecko.com/api/near"],
-    ["PARSE", "$a", "u128"],
-    ["PARSE", "$b", "u128"],
-    ["ADD", "$c", ["$a", "$b"]],
-    ["DIV", "$c", ["$c", "2"]],
-    ["RETURN", "$c"]
-]
