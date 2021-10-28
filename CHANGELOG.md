@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0](https://github.com/fluxprotocol/oracle-vm/compare/v1.1.0...v2.0.0) (2021-10-28)
+
+
+### ⚠ BREAKING CHANGES
+
+* **vm:** Removes support for old opcodes
+
+Squashed commits:
+[4ebf0e3] WIP: Convert timestamp to hrtime
+[1912f63] WIP: Add support for caching prepared WASM
+[ed045c7] WIP: Add extra debugging logs
+[60c2707] WIP: Implemented BigDecimal for combining numbers
+[9749435] WIP: Add support for logging errors
+[41b01fb] WIP: Add support for setting headers and method in a http_call
+[e652060] WIP: Fetching API data through WASM
+[0ed74e0] WIP: Sending commands from the worker back to the master
+[5c62c60] WIP: Implementing function calling
+[da679b2] chore(build): Working version of workers + TypeScript + Webpack
+[8920f06] WIP: On node/browser building with webpack
+[f56d907] WIP: WASM implementation
+
+### Features
+
+* **vm:** Add support for WASM ([7f2cd5c](https://github.com/fluxprotocol/oracle-vm/commit/7f2cd5cff2c6764b93b85ed906461da87069dd66))
+
 ## [1.1.0](https://github.com/fluxprotocol/oracle-vm/compare/v0.0.5...v1.1.0) (2021-07-14)
 
 
