@@ -1,5 +1,6 @@
 use std::env;
 use serde::{ Deserialize, Serialize };
+use serde_json::json;
 use jsonpath_rust::JsonPathFinder;
 use bigdecimal::{ BigDecimal };
 use std::str::{ FromStr };
@@ -42,16 +43,32 @@ fn main() {
         let http_result_data = http_result.unwrap().result;
         
         // Finds a value in the returned json using the path given in args
-        let finder = JsonPathFinder::from_str(&http_result_data, &source.source_path).unwrap();
-        let found_values = finder.find();
+        let finder = JsonPathFinder::from_str(&http_result_data, &source.source_path);
+        if finder.is_err() {
+            eprintln!("Invalid source path {}", &source.source_path);
+            continue;
+        }
+
+        let unwrapped_finder = finder.unwrap();
+        let found_values = unwrapped_finder.find();
         let result_value = match found_values.get(0) {
-            Some(val) => val,
-            None => panic!("Could not find: {}", source.source_path),
-        };
+                Some(val) => val,
+                None => panic!("Could not find: {}", source.source_path),
+            };
 
         if sources_type == "string" {
-            string_result = result_value.as_str().unwrap().to_string();
+            if found_values.len() > 1 {
+                string_result = json!(found_values).to_string();
+            } else {
+                if result_value.is_string() {
+                    string_result = result_value.as_str().unwrap().to_string();
+                } else {
+                    string_result = result_value.to_string();
+                }
+            }
         } else if sources_type == "number" {
+            assert_eq!(found_values.len(), 1, "ERR_TOO_MUCH_RESULTS");
+
             // Converting numbers to strings so we can use BigDecimal to combine them all
             let mut val: Option<BigDecimal> = None;
 

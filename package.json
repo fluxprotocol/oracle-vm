@@ -32,7 +32,7 @@
         "wasm-metering": "^0.2.1"
     },
     "scripts": {
-        "release": "npm run build && standard-version && npm publish",
+        "release": "npm run build && standard-version",
         "build-old": "tsc -p .",
         "build": "cross-env NODE_ENV=development webpack",
         "test": "npm run build && jest",

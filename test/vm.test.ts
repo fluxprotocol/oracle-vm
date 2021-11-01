@@ -89,7 +89,7 @@ describe('Process', () => {
 
         const outcome = JSON.parse(result.logs[result.logs.length - 1]);
 
-        expect(result.gasUsed).toBe('633190654');
+        expect(result.gasUsed).toBe('633421244');
         expect(outcome.value).toBe('70500');
     });
 
@@ -117,7 +117,7 @@ describe('Process', () => {
         const outcome = JSON.parse(result.logs[result.logs.length - 1]);
 
         expect(outcome.value).toBe('641802');
-        expect(result.gasUsed).toBe('16853419');
+        expect(result.gasUsed).toBe('16883963');
     });
 
     it('should execute the simple-call-url and combine numbers with a big multiplier', async () => {
@@ -147,7 +147,7 @@ describe('Process', () => {
 
         const outcome = JSON.parse(result.logs[result.logs.length - 1]);
 
-        expect(result.gasUsed).toBe('632902012');
+        expect(result.gasUsed).toBe('633132602');
         expect(outcome.value).toBe('705000000000000000000000000');
     });
 
@@ -173,7 +173,7 @@ describe('Process', () => {
         }, memoryCache);
 
         const outcome = JSON.parse(result.logs[result.logs.length - 1]);
-        expect(result.gasUsed).toBe('23223018');
+        expect(result.gasUsed).toBe('23255977');
         expect(outcome.value).toBe('493625367592069900000000000000');
     });
 
@@ -207,5 +207,38 @@ describe('Process', () => {
 
         expect(getSpy).toHaveBeenCalledTimes(2);
         expect(setSpy).toHaveBeenCalledTimes(1);
+    });
+
+    it('should be able to get the last item of an array', async () => {
+        const wasm = readFileSync(__dirname + '/wasm/basic-fetch.wasm');
+        const context: Context = {
+            args: [
+                '0xdeadbeef',
+                JSON.stringify([
+                    {
+                        end_point: 'https://pokeapi.co/api/v2/pokemon/ditto',
+                        source_path: '$.abilities[0].slot',
+                    },
+                    {
+                        end_point: 'https://pokeapi.co/api/v2/pokemon/ditto',
+                        // source_path: 'abilities[$$last].slot',
+                        source_path: '$..abilities[-1:].slot'
+                    },
+                ]),
+                'number',
+                (1000).toString(),
+            ],
+            binary: new Uint8Array(wasm),
+            env: {},
+            gasLimit: (300_000_000_000_000).toString(),
+            randomSeed: '0x012',
+            timestamp: new Date().getTime()
+        };
+
+        const result = await execute(context, memoryCache);
+        const outcome = JSON.parse(result.logs[result.logs.length - 1]);
+
+        expect(result.gasUsed).toBe('661357197');
+        expect(outcome.value).toBe('2000');
     });
 });
